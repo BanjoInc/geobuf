@@ -1,10 +1,18 @@
-option optimize_for = LITE_RUNTIME;
+// [START declaration]
+syntax = "proto3";
+package proto;
+// [END declaration]
+
+// [START java_declaration]
+option java_package = "jo.ban.proto";
+option java_outer_classname = "GeoBufProtos";
+// [END java_declaration
 
 message Data {
     repeated string keys = 1; // global arrays of unique keys
 
-    optional uint32 dimensions = 2 [default = 2]; // max coordinate dimensions
-    optional uint32 precision = 3 [default = 6]; // number of digits after decimal point for coordinates
+    uint32 dimensions = 2; // max coordinate dimensions
+    uint32 precision = 3; // number of digits after decimal point for coordinates
 
     oneof data_type {
         FeatureCollection feature_collection = 4;
@@ -13,7 +21,7 @@ message Data {
     }
 
     message Feature {
-        required Geometry geometry = 1;
+        Geometry geometry = 1;
 
         oneof id_type {
             string id = 11;
@@ -26,7 +34,7 @@ message Data {
     }
 
     message Geometry {
-        required Type type = 1;
+        Type type = 1;
 
         repeated uint32 lengths = 2 [packed = true]; // coordinate structure in lengths
         repeated sint64 coords = 3 [packed = true]; // delta-encoded integer values
